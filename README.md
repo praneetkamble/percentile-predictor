@@ -220,3 +220,15 @@ It helps the project reach more students and developers.
 **Made with ❤️ by Praneet Kamble**
 
 </div>
+
+---
+
+## 📸 Reference Images
+
+<div align="center">
+
+![Reference image 1](reference-images/screenshot-2026-06-07-113651.png)
+
+![Reference image 2](reference-images/screenshot-2026-06-07-113709.png)
+
+</div>
