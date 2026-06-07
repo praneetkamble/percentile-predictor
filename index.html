@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JEE & CET Percentile Predictor</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="topbar-brand">
+          <span class="mini-mark">%</span>
+          <strong>RankSense</strong>
+        </div>
+        <div class="topbar-pills">
+          <span>JEE</span>
+          <span>CET</span>
+          <span>Rank bands</span>
+        </div>
+      </header>
+
+      <section class="hero-panel">
+        <div class="hero-content">
+          <div class="brand-row">
+            <div class="brand-mark">%</div>
+            <div>
+              <p class="eyebrow">Engineering entrance score intelligence</p>
+              <h1>Predict your percentile before the result rush.</h1>
+            </div>
+          </div>
+          <p class="hero-copy">
+            Estimate percentile, rank band, qualification risk, and score strength for JEE Main,
+            JEE Advanced, MHT CET, KCET, WBJEE, COMEDK, BITSAT, GUJCET, AP EAPCET, and TS EAMCET.
+          </p>
+        </div>
+
+        <aside class="hero-summary" aria-label="Predictor summary">
+          <div>
+            <span>Current focus</span>
+            <strong id="heroExam">JEE Main</strong>
+          </div>
+          <div class="mini-meter">
+            <span></span>
+          </div>
+          <p>Official formulas where possible. Trend bands where the full distribution is not public.</p>
+        </aside>
+
+        <div class="hero-stats" aria-label="Supported predictor highlights">
+          <div>
+            <strong>10</strong>
+            <span>exam modes</span>
+          </div>
+          <div>
+            <strong>2025-26</strong>
+            <span>trend tuned</span>
+          </div>
+          <div>
+            <strong>Live</strong>
+            <span>instant output</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <form class="predictor-card" id="predictorForm">
+          <div class="section-heading">
+            <p class="eyebrow">Input</p>
+            <h2>Predict Your Standing</h2>
+          </div>
+
+          <label class="field">
+            <span>Exam</span>
+            <select id="examSelect" name="exam"></select>
+          </label>
+
+          <div class="score-grid">
+            <label class="field">
+              <span id="scoreLabel">Score</span>
+              <input id="scoreInput" name="score" type="number" min="0" step="0.01" value="150" />
+            </label>
+            <label class="field">
+              <span>Total Marks</span>
+              <input id="totalInput" name="total" type="number" min="1" step="1" value="300" />
+            </label>
+          </div>
+
+          <div class="score-grid">
+            <label class="field">
+              <span>Expected Candidates</span>
+              <input id="candidatesInput" name="candidates" type="number" min="1000" step="1000" value="1400000" />
+            </label>
+            <label class="field">
+              <span>Difficulty / Shift</span>
+              <select id="difficultySelect" name="difficulty">
+                <option value="tough">Tougher than average</option>
+                <option value="normal" selected>Normal</option>
+                <option value="easy">Easier than average</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="slider-wrap">
+            <div>
+              <span>Score slider</span>
+              <strong id="sliderValue">150 / 300</strong>
+            </div>
+            <input id="scoreSlider" type="range" min="0" max="300" value="150" />
+          </div>
+
+          <div class="quick-row" aria-label="Quick score presets">
+            <button type="button" data-score-preset="0.4">40%</button>
+            <button type="button" data-score-preset="0.55">55%</button>
+            <button type="button" data-score-preset="0.7">70%</button>
+            <button type="button" data-score-preset="0.85">85%</button>
+          </div>
+
+          <div class="toggle-row">
+            <label>
+              <input id="boardToggle" type="checkbox" />
+              <span>Use board marks for KCET/GUJCET style merit</span>
+            </label>
+          </div>
+
+          <div class="board-panel" id="boardPanel" hidden>
+            <label class="field">
+              <span>Board PCM / PCB Percentage</span>
+              <input id="boardInput" type="number" min="0" max="100" step="0.01" value="85" />
+            </label>
+          </div>
+        </form>
+
+        <section class="result-panel" aria-live="polite">
+          <div class="result-topline">
+            <div>
+              <p class="eyebrow">Prediction</p>
+              <h2 id="examTitle">JEE Main</h2>
+            </div>
+            <span class="badge" id="confidenceBadge">High confidence</span>
+          </div>
+
+          <div class="percentile-meter">
+            <svg viewBox="0 0 220 120" role="img" aria-label="Percentile gauge">
+              <defs>
+                <linearGradient id="meterGradient" x1="20" x2="200" y1="110" y2="110" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#ef6f6c" />
+                  <stop offset="0.52" stop-color="#f2b84b" />
+                  <stop offset="1" stop-color="#0f8b8d" />
+                </linearGradient>
+              </defs>
+              <path class="meter-track" d="M20 110 A90 90 0 0 1 200 110" />
+              <path class="meter-fill" id="meterFill" d="M20 110 A90 90 0 0 1 200 110" />
+              <circle id="meterNeedle" class="meter-dot" cx="20" cy="110" r="6" />
+            </svg>
+            <div class="big-number">
+              <span id="percentileOutput">97.08</span>
+              <small id="primaryUnit">percentile</small>
+            </div>
+          </div>
+
+          <div class="score-context">
+            <div>
+              <span>Your score</span>
+              <strong id="scoreContext">150 / 300</strong>
+            </div>
+            <div>
+              <span>Next milestone</span>
+              <strong id="nextMilestone">97%ile in 1 mark</strong>
+            </div>
+            <div>
+              <span>Difficulty effect</span>
+              <strong id="difficultyContext">Normal</strong>
+            </div>
+          </div>
+
+          <div class="metric-grid">
+            <article>
+              <span>Estimated Rank</span>
+              <strong id="rankOutput">40,880</strong>
+            </article>
+            <article>
+              <span>Range</span>
+              <strong id="rangeOutput">35,157 - 46,604</strong>
+            </article>
+            <article>
+              <span>Score Strength</span>
+              <strong id="strengthOutput">Strong</strong>
+            </article>
+            <article>
+              <span>Accuracy Mode</span>
+              <strong id="modeOutput">Official formula + trend curve</strong>
+            </article>
+          </div>
+
+          <div class="insight-box">
+            <h3>What this means</h3>
+            <p id="insightText"></p>
+          </div>
+
+          <div class="action-box">
+            <h3>Next best moves</h3>
+            <div id="actionList"></div>
+          </div>
+
+          <div class="chart-block">
+            <div class="chart-head">
+              <span>Score to Percentile Curve</span>
+              <strong id="curveLabel">JEE Main trend</strong>
+            </div>
+            <canvas id="curveCanvas" width="720" height="260"></canvas>
+          </div>
+        </section>
+      </section>
+
+      <section class="data-notes">
+        <div>
+          <p class="eyebrow">Accuracy notes</p>
+          <h2>Built For Honest Estimates</h2>
+        </div>
+        <p>
+          Official percentile formulas need the full shift-wise score distribution, which is not
+          public before results. This app combines official normalisation formulas with historical
+          marks-vs-rank and marks-vs-percentile trend anchors. Results are estimates, not official
+          admissions decisions.
+        </p>
+        <div class="source-grid" id="sourceGrid"></div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
